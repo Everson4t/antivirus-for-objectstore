@@ -11,4 +11,5 @@ with open('/root/objects.txt') as file:
        scan_obj = object_storage_client.get_object(object_storage_client.get_namespace().data, bucket_name, line)
        # Scan object
        print("Bucket: {0} - Object: {1} - Result: {2}".format(bucket_name,line,cdsocket.scan_stream(scan_obj.data.content)))
-
+       # Move object (copy + delete)
+       
