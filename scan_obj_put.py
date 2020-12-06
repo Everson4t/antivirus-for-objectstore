@@ -1,7 +1,8 @@
 import oci, pyclamd
 from base64 import b64decode
 
-bucket_name = "bucket1"
+bucket_scan = "bucket1"
+bucket_quarentine = "quarentine"
 streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaaaaay4fmgaax5ttloxb52w7nfkqqgueytfjreoagds3dtgyn5bye74a"
 endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 
@@ -20,6 +21,6 @@ if len(r.data):
     for message in r.data:
         file = b64decode(message.value).decode('utf-8')
 		# Get object from Bucket
-        scan_obj = object_storage_client.get_object(object_storage_client.get_namespace().data, bucket_name, file.split(',')[8].split(':')[1].replace('"',''))
+        scan_obj = object_storage_client.get_object(object_storage_client.get_namespace().data, bucket_scan, file.split(',')[8].split(':')[1].replace('"',''))
         # Scan object
-        print("Bucket: {0} - Object: {1} - Result: {2}".format(bucket_name,file.split(',')[8].split(':')[1].replace('"',''),cdsocket.scan_stream(scan_obj.data.content)))
+        print("Bucket: {0} - Object: {1} - Result: {2}".format(bucket_scan,file.split(',')[8].split(':')[1].replace('"',''),cdsocket.scan_stream(scan_obj.data.content)))
