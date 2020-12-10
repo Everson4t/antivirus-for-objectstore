@@ -16,10 +16,12 @@ We are going to use Clamav open source anti-virus engine for detecting trojans, 
 You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN template or you can just start your instance on a existing subnet. It is all about you and we are going to use a new compartment called **scan**. Besides that you are gonna need to setup the following resources:
 
 ### Object Storage
+
 1. Select a bucket with objects to scan and enable *Emit Object Events*
 2. Create a bucket to move infected object to it (quarantine)
 
 ### Security 
+
 3. Create a Dynamic Group with a rule that will qualify your instance **dyngroupscan**
 4. Create a policy to allow your Dynamic Group to manage objects **policiescan**
 ```
@@ -29,15 +31,19 @@ Allow dynamic-group dyngroupscan to manage stream-family in compartment scan
 Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment scan
 ```
 ### Services
+
 5. Create a stream to receive event from object creation.
 6. Create an event to track object creation
 
 ### Instance 
+
 7. Create a instance with **Oracle Developer Image** and **cloud-init** script
 
 ### Usage
 
-### Extension
+### Roadmap
+
+If you have ideas for releases in the future, it is a good idea to list them in the README.
 
 ### References
 
@@ -57,11 +63,7 @@ Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment
 
 ### Authors and acknowledgment
 
-I'd like to say thanks to Fabio Silva and Fernando Costawho help me to build this project
-
-### Roadmap
-
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+I'd like to say thanks to Fabio Silva and Fernando Costa who help me to build this project
 
 ### License
 
