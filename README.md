@@ -1,2 +1,64 @@
-# antivirus-for-objectstore
+# Low cost antivirus for object storage
+
 Low cost Anti-virus for Oracle Cloud object store 
+
+## Overview 
+
+Improve security and maintain compliance by building a low cost anti-virus to scan all your objects in a bucket and also scan an object when it is created using only an instance and open source software.
+
+You can store an unlimited amount of unstructured data of any content type in your internet-scale and high-performance object storage . You may want to run an anti-virus to identify threats and then move those objects to another bucket called quarantine.
+
+We are going to use Clamav open source anti-virus engine for detecting trojans, viruses, malware and other malicious threats for this solution
+
+
+## Setup
+
+You can spin up your instance on a different Compartment and network infrastructure using a template VCN or you can just start your instance on a existing VCN. It is all about you. Besides that you are gonna need to setup the following resources
+
+### Object Storage
+1. Select a bucket with objects to scan and enable Emit Object Events 
+2. Create a bucket to move infected object on it (quarentine)
+
+### Security 
+3. Create a Dynamic Group with a rule that will qualify your instance
+4. Create a policy to allow your Dynamic Group to manage objects 
+
+### Services
+5. Create a stream to receive event from object creation
+6. Create an event to track object creation
+
+### Instance 
+7. Create a instance with Oracle Developer Image and cloud-init script
+
+### Usage
+
+### Extension
+
+### References
+Calling Services from an Instance: https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Tasks/callingservicesfrominstances.htm
+Managing Dynamic Groups: https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Tasks/managingdynamicgroups.htm
+Writing authorization policies for Dynamic Groups: https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Tasks/callingservicesfrominstances.htm#Writing
+OCI Command Line Interface (CLI): https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cliconcepts.htm
+CLI supported OS and Python versions:  https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cliconcepts.htm#SupportedPythonVersionsandOperatingSystems
+OCI CLI Quick Start:  https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm
+Instance Principals:  https://blogs.oracle.com/cloud-infrastructure/announcing-instance-principals-for-identity-and-access-management
+
+### Authors and acknowledgment
+Fabio Silva
+Fernando Costa
+
+### License
+
+For open source projects, say how it is [licensed](https://www.oracle.com).
+
+### Roadmap
+
+If you have ideas for releases in the future, it is a good idea to list them in the README.
+
+`Inline code` with backticks
+
+```  
+# code block  
+print '3 backticks or'  
+print 'indent 4 spaces'  
+```
