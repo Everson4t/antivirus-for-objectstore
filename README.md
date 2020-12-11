@@ -1,23 +1,22 @@
 # Low cost antivirus for object storage
 
-Low cost Anti-virus for Oracle Cloud object store 
+Low cost Antivirus for Oracle Cloud object store 
 
 ## Overview 
 
-Improve security and maintain compliance by building a low cost anti-virus to scan all your objects in a bucket and also scan an object when it is created using only an instance and open source software.
+Improve security and maintain compliance by building a low cost antivirus to scan all your objects in a bucket and also scan an object when it is created using only an OCI instance and open source software.
 
-You can store an unlimited amount of unstructured data of any content type in your internet-scale and high-performance object storage . You may want to run an anti-virus to identify threats and then move those objects to another bucket called quarantine.
+You can store an unlimited amount of unstructured data of any content type in your internet-scale and high-performance object storage . You may want to run an antivirus to identify threats and then move those infected objects to another bucket called quarantine.
 
-We are going to use Clamav open source anti-virus engine for detecting trojans, viruses, malware and other malicious threats for this solution
-
+We are going to use Clamav open source antivirus engine for detecting trojans, viruses, malware and other malicious threats for this solution.
 
 ## Setup
 
-You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN template or you can just start your instance on a existing subnet. It is all about you and we are going to use a new compartment called **scan**. Besides that you are gonna need to setup the following resources:
+You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN template or you can just start your instance on a existing subnet. It is all up to you. We are going to use a new compartment called **scan**. Besides that you'll need to setup the following resources:
 
 ### Object Storage
 
-1. Select a bucket with objects to scan and enable *Emit Object Events*
+1. Select a bucket with objects to scan and enable *Emit Object Events* for this bucket
 2. Create a bucket to move infected object to it (quarantine)
 
 ### Security 
@@ -47,9 +46,8 @@ If you have ideas for releases in the future, it is a good idea to list them in 
 
 ### References
 
-[Calling Services from an Instance:](https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Tasks/callingservicesfrominstances.htm)
-
-[Managing Dynamic Groups:](https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Tasks/managingdynamicgroups.htm)
+[Calling Services from an Instance:](https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Tasks/callingservicesfrominstances.htm) \
+[Managing Dynamic Groups:](https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Tasks/managingdynamicgroups.htm) \
 
 [Writing authorization policies for Dynamic Groups:](https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Tasks/callingservicesfrominstances.htm#Writing)
 
