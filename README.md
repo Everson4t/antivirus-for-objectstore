@@ -12,12 +12,12 @@ We are going to use Clamav open source antivirus engine for detecting trojans, v
 
 ## Setup
 
-You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN template or you can just start your instance on a existing subnet. It is all up to you. We are going to use a new compartment called **scan**. Besides that you'll need to setup the following resources:
+You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN template or you can just start your instance on a existing subnet. It is all up to you. We are going to use a new compartment called **scan** and also a VCN using the template. Besides that you'll need to setup the following resources:
 
 ### Object Storage
 
-1. Select a bucket with objects to scan and enable *Emit Object Events* for this bucket
-2. Create a bucket to move infected object to it (quarantine)
+1. Select a bucket with objects to scan and enable *Emit Object Events* for this bucket. Name **bucket1**
+2. Create a bucket to move infected object to it. Name **quarantine**
 
 ### Security 
 
@@ -31,17 +31,23 @@ Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment
 ```
 ### Services
 
-5. Create a stream to receive event from object creation.
-6. Create an event to track object creation
+5. Create a stream to receive event from object creation. Name **Stream1**
+6. Create an event to track object creation  on bucket1 and write to Stream1. Name **Event1**
 
 ### Instance 
 
-7. Create a instance with **Oracle Developer Image** and **cloud-init** script
+7. Create a Linux instance with **Oracle Developer Image**. Name **Instav**
+8. Start this instance with a **cloud-init** script. Name **BSAV2.sh**
 
 ## Usage
 
+
+
 ## Roadmap
 
+1. You can use this solution with a different antivirus  
+2. second
+3. third
 If you have ideas for releases in the future, it is a good idea to list them in the README.
 
 ## References
