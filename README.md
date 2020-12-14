@@ -10,7 +10,7 @@ You can store an unlimited amount of unstructured data of any content type in yo
 
 We are going to use Clamav open source antivirus engine for detecting trojans, viruses, malware and other malicious threats for this solution.
 
-![aam5arm2qa3vuevw5jpfnhbvcnm7ltaki7ul5yjfoikecr6yn](https://link)
+![aam5arm2qa3vuevw5jpfnhbvcnm7ltaki7ul5yjfoikecr6yn](https://github.com/Everson4t/antivirus-for-objectstore/blob/main/images/AVobj1.JPG)
 
 ## Setup
 
