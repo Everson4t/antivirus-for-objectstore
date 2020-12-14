@@ -10,6 +10,8 @@ You can store an unlimited amount of unstructured data of any content type in yo
 
 We are going to use Clamav open source antivirus engine for detecting trojans, viruses, malware and other malicious threats for this solution.
 
+![aam5arm2qa3vuevw5jpfnhbvcnm7ltaki7ul5yjfoikecr6yn](https://link)
+
 ## Setup
 
 You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN template or you can just start your instance on a existing subnet. It is all up to you. We are going to use a new compartment called **scan** and also a VCN using the template. Besides that you'll need to setup the following resources:
@@ -29,26 +31,44 @@ Allow dynamic-group dyngroupscan to manage objects in compartment scan
 Allow dynamic-group dyngroupscan to manage stream-family in compartment scan
 Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment scan
 ```
-### Services
+### Stream
 
 5. Create a stream to receive event from object creation. Name **Stream1**
+for this component you need to anotate the streamID and endpoint 
+```
+streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaa......moxla"
+endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
+```
+### Event
 6. Create an event to track object creation  on bucket1 and write to Stream1. Name **Event1**
 
-### Instance 
+### Key par 
 
-7. Create a Linux instance with **Oracle Developer Image**. Name **Instav**
-8. Start this instance with a **cloud-init** script. Name **BSAV2.sh**
+7. Generate a ssh key par to use with your instance
+8. Create a Linux instance with **Oracle Developer Image**. Name **Instav**
+9. Start this instance with a **cloud-init** script. Name **BSAV2.sh**
 
-## Usage
+## Usage with SCAN
 
+To scan your bucket do the following:
+1. Create a Linux instance in the compartment scan
+2. Select the shape you need and **Oracle Developer Image**
+3. Put the instance in your VCN and Subnet 
+4. Add a **cloud-init** script for the instane **BSAV2.sh**
 
+## Usage with PROTECT
 
-## Roadmap
+To protect your bucket scanning objects created on it do the following:
+1. Create a Linux instance in the compartment scan
+2. Select the shape you need and **Oracle Developer Image**
+3. Put the instance in your VCN and Subnet 
+4. Add a **cloud-init** script for the instane **BSAV2.sh**
 
-1. You can use this solution with a different antivirus  
-2. second
-3. third
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## Roadmap and extensions 
+
+1. Implement this solution with a different or comercial antivirus  
+2. Make the protect session a deamon to read the stream contantly
+3. Any great idea you may have.
 
 ## References
 
@@ -62,11 +82,8 @@ If you have ideas for releases in the future, it is a good idea to list them in 
 
 ## Authors and acknowledgment
 
-I'd like to say thanks to Fabio Silva and Fernando Costa who help me to build this project
+I'd like to say thank you very much to Fabio Silva and Fernando Costa who help me to build this project
 
 ## License
 
 Clam AntiVirus is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-
-[Oracle](https://www.oracle.com).
-`Inline code` with backticks
