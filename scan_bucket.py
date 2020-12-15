@@ -1,5 +1,5 @@
-import oci, pyclamd
-bucket_name = 'bucket1'
+import sys, oci, pyclamd
+bucket_name = sys.argv[1]
 signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
 object_storage_client = oci.object_storage.ObjectStorageClient(config={}, signer=signer)
 cdsocket = pyclamd.ClamdUnixSocket()

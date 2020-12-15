@@ -12,8 +12,9 @@ systemctl start clamd@scan
 systemctl enable clamd@scan
 echo "ClamAV Install Ended"
 
-echo "List objects"
 bucket_name=bucket1
+
+echo "List objects"
 oci os object list -bn $bucket_name --auth instance_principal --query 'data[].name[]' | sed 's/[",]//g' | sed '1d;$d' >>/root/objects.txt
 
 echo "Scan objects"
