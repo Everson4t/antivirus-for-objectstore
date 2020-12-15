@@ -12,24 +12,11 @@ systemctl start clamd@scan
 systemctl enable clamd@scan
 echo "ClamAV Install Ended"
 
-oci os object list -bn bucket1 --auth instance_principal --query 'data[].name[]' | sed 's/[",]//g' | sed '1d;$d' >>/root/objects.txt
+echo "List objects"
+bucket_name=bucket1
+oci os object list -bn $bucket_name --auth instance_principal --query 'data[].name[]' | sed 's/[",]//g' | sed '1d;$d' >>/root/objects.txt
 
-cat << EOF > /root/objscan.py
-import oci, pyclamd
-bucket_name = 'bucket1'
-signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
-object_storage_client = oci.object_storage.ObjectStorageClient(config={}, signer=signer)
-cdsocket = pyclamd.ClamdUnixSocket()
-# read objects list from file
-with open('/root/objects.txt') as file:
-   for line in file:
-       line = line.strip()
-       # Get object from Bucket
-       scan_obj = object_storage_client.get_object(object_storage_client.get_namespace().data, bucket_name, line)
-       # Scan object
-       print("Bucket: {0} - Object: {1} - Result: {2}".format(bucket_name,line,cdsocket.scan_stream(scan_obj.data.content)))
-EOF
-chmod 744 /root/objscan.py
-/usr/bin/python3 /root/objscan.py >> /root/report.txt
-
-
+echo "Scan objects"
+curl -O https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scan_bucket.py
+chmod 744 /root/scan_bucket.py
+/usr/bin/python3 /root/objscan.py $bucket_name >> /root/report.txt

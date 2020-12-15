@@ -18,14 +18,14 @@ You can spin up your instance on a different **Compartment** and a new **Virtual
 
 ### Object Storage
 
-1. Select a bucket with objects to scan and enable *Emit Object Events* for this bucket. Name **bucket1**
-2. Create a bucket to move infected object to it. Name **quarantine**
+1. Select a bucket with objects to scan and enable *Emit Object Events* for this bucket. Name: **bucket1**
+2. Create a bucket to move infected object to it. Name: **quarantine**
 
 ### Security 
 
-3. Create a Dynamic Group with a rule that will qualify your instance **dyngroupscan**
-4. Create a policy to allow your Dynamic Group to manage objects **policiescan**
-```
+3. Create a Dynamic Group with a rule that will qualify your instance. Name: **dyngroupscan**
+4. Create a policy to allow your Dynamic Group to manage objects. Name: **policiescan**
+```oci
 Allow dynamic-group dyngroupscan to manage buckets in compartment scan
 Allow dynamic-group dyngroupscan to manage objects in compartment scan
 Allow dynamic-group dyngroupscan to manage stream-family in compartment scan
@@ -42,11 +42,8 @@ endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 ### Event
 6. Create an event to track object creation  on bucket1 and write to Stream1. Name **Event1**
 
-### Key par 
-
+### ssh Key par 
 7. Generate a ssh key par to use with your instance
-8. Create a Linux instance with **Oracle Developer Image**. Name **Instav**
-9. Start this instance with a **cloud-init** script. Name **BSAV2.sh**
 
 ## Usage with SCAN
 
