@@ -43,29 +43,32 @@ endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 6. Create an event to track object creation  on bucket1 and write to Stream1. Name **Event1**
 
 ### ssh Key par 
-7. Generate a ssh key par to use with your instance
+7. Generate a ssh key par to use with your instance.
 
 ## Usage with SCAN
 
 To scan your bucket do the following:
-1. Create a Linux instance in the compartment scan
+1. Create a Linux instance in the compartment scan.
 2. Select the shape you need and **Oracle Developer Image**
-3. Put the instance in your VCN and Subnet 
-4. Add a **cloud-init** script for the instane **BSAV2.sh**
+3. Put the instance in your VCN and Subnet. 
+4. Copy the **cloud-init** script for the instane. File: **BSAV2.sh**
+5. Don't forget to adjust the variable **bucket_name** at line 15 !!
 
 ## Usage with PROTECT
 
 To protect your bucket scanning objects created on it do the following:
-1. Create a Linux instance in the compartment scan
+1. Create a Linux instance in the compartment scan.
 2. Select the shape you need and **Oracle Developer Image**
-3. Put the instance in your VCN and Subnet 
-4. Add a **cloud-init** script for the instane **BSAV2.sh**
+3. Put the instance in your VCN and Subnet. 
+4. Copy the **cloud-init** script for the instane. File: **BSAV2.sh**
+5. Adjust the variable **bucket_name, bucket_quarantine, streamID, endpoint** !
 
 ## Roadmap and extensions 
 
-1. Implement this solution with a different or comercial antivirus  
-2. Make the protect session a deamon to read the stream contantly
-3. Any great idea you may have.
+1. Implement this solution with a different or comercial antivirus.  
+2. Make the protect session a deamon to read the stream contantly.
+3. Send an alert e-mail when a threat is found. 
+4. Any great idea you may have.
 
 ## References
 
