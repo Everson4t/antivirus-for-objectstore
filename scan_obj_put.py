@@ -2,12 +2,12 @@ import oci, pyclamd
 from base64 import b64decode
 
 bucket_scan = "bucket1"
-bucket_quarentine = "quarentine"
-region = "sa-saopaulo-1"
+bucket_quarantine = "quarantine"
 streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaaaaay4fmgaax5ttloxb52w7nfkqqgueytfjreoagds3dtgyn5bye74a"
 endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 
 signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
+region = signer.region
 streaming = oci.streaming.StreamClient(config={}, service_endpoint=endpoint, signer=signer)
 object_storage_client = oci.object_storage.ObjectStorageClient(config={}, signer=signer)
 namespace = object_storage_client.get_namespace().data
@@ -29,14 +29,14 @@ if len(r.data):
         # Scan object
         retmessage = cdsocket.scan_stream(scan_obj.data.content)
         print("Bucket: {0} - Object: {1} - Result: {2}".format(bucket_scan, object_name, retmessage))
-        # If virus found move to bucket quarentine
+        # If virus found move to bucket quarantine
         if retmessage.get('stream')[0] == "FOUND":
             print("Mensagem {0}".format(retmessage.get('stream')[1]))
             cur_obj_detail = oci.object_storage.models.CopyObjectDetails()
             cur_obj_detail.source_object_name = object_name
             cur_obj_detail.destination_region = region
             cur_obj_detail.destination_namespace = namespace
-            cur_obj_detail.destination_bucket = bucket_quarentine
+            cur_obj_detail.destination_bucket = bucket_quarantine
             cur_obj_detail.destination_object_name = object_name
             resp_cp = object_storage_client.copy_object(namespace, bucket_scan, cur_obj_detail)
             print("resp_cp data: {0} - resp_cp status {1} - obj_name {2}".format(resp_cp.data, resp_cp.status, object_name))

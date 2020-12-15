@@ -40,7 +40,7 @@ streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaa......moxla"
 endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 ```
 ### Event
-6. Create an event to track object creation  on bucket1 and write to Stream1. Name **Event1**
+6. Create an event to track object creation on bucket1 and write to Stream1. Name: **Event1**
 
 ### ssh Key par 
 7. Generate a ssh key par to use with your instance.
