@@ -14,16 +14,24 @@ We are going to use Clamav open source antivirus engine for detecting trojans, v
 
 ## Setup
 
-You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN template or you can just start your instance on a existing subnet. It is all up to you. We are going to use a new compartment called **scan** and also a VCN using the template. Besides that you'll need to setup the following resources:
+To setup this envirionment you need to have all the required privileges in the compartment or be part of an administrator group.
+You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN Wizard or you can just start your instance on an existing subnet. It is all up to you. 
+We are going to use a new compartment called **scan** and also a VCN using the Wizard. Besides that you'll need to setup the following resources:
+
+### Compartment and VCN
+Create a new compartment called **scan** and anotate the compartment OCID. Create also a VCN using Wizard. 
 
 ### Object Storage
 
-1. Select a bucket with objects to scan and enable *Emit Object Events* for this bucket. Name: **bucket1**
-2. Create a bucket to move infected object to it. Name: **quarantine**
+1. Select a bucket with objects to scan and enable **Emit Object Events** for this bucket. Name: **bucket1**
+2. Create a standard bucket to move infected object to it. Name: **quarantine**
 
 ### Security 
 
 3. Create a Dynamic Group with a rule that will qualify your instance. Name: **dyngroupscan**
+``` 
+All {instance.compartment.id = 'ocid1.compartment.oc1..aaaaaaaa......algq'} 
+ ```
 4. Create a policy to allow your Dynamic Group to manage objects. Name: **policiescan**
 ```oci
 Allow dynamic-group dyngroupscan to manage buckets in compartment scan
@@ -40,7 +48,7 @@ streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaa......moxla"
 endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 ```
 ### Event
-6. Create an event to track object creation on bucket1 and write to Stream1. Name: **Event1**
+6. Create an event to track object create on bucket1 and write to Stream1. Name: **Event1**
 
 ### ssh Key par 
 7. Generate a ssh key par to use with your instance.
