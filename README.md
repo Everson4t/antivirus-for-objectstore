@@ -14,14 +14,14 @@ We are going to use Clamav open source antivirus engine for detecting trojans, v
 
 ## Setup
 
-To setup this envirionment you need to have all the required privileges in the compartment or be part of an administrator group.
+To setup this environment you need to have all the required privileges in the compartment or be part of an administrator group.
 
 You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN Wizard or you can just start your instance on an existing subnet. It is all up to you.
 
 We are going to use a new compartment called **scan** and also a VCN using the Wizard. Besides that you'll need to setup the following resources:
 
 ### Compartment and VCN
-Create a new compartment called **scan** and anotate the compartment OCID. Create also a VCN using Wizard. 
+Create a new compartment called **scan** and annotate the compartment OCID. Create also a VCN using Wizard. 
 
 ### Object Storage
 
@@ -44,7 +44,7 @@ Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment
 ### Stream
 
 5. Create a stream to receive event from object creation. Name **Stream1**
-for this component you need to anotate the streamID and endpoint 
+for this component you need to annotate the streamID and endpoint 
 ```
 streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaa......moxla"
 endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
@@ -61,7 +61,7 @@ To scan your bucket do the following:
 1. Create a Linux instance in the compartment scan.
 2. Select the shape you need and **Oracle Developer Image**
 3. Put the instance in your VCN and Subnet. 
-4. Copy the **cloud-init** script for the instane. File: **BSAV2.sh**
+4. Copy the **cloud-init** script for the instance. File: **BSAV2.sh**
 5. Adjust the parameters **bucket1**  and **quarantine** at line 18 !!
 
 ## Usage with PROTECT
@@ -70,15 +70,16 @@ To protect your bucket scanning objects created on it do the following:
 1. Create a Linux instance in the compartment scan.
 2. Select the shape you need and **Oracle Developer Image**
 3. Put the instance in your VCN and Subnet. 
-4. Copy the **cloud-init** script for the instane. File: **BSAV2.sh**
+4. Copy the **cloud-init** script for the instance. File: **BSAV2.sh**
 5. Adjust the parameters **bucket_to_scan, bucket_quarantine, streamID, endpoint** !
 
 ## Roadmap and extensions 
 
-1. Implement this solution with a different or comercial antivirus.  
-2. Make the protect session a deamon to read the stream contantly.
+1. Implement this solution with a different or commercial antivirus.  
+2. Make the protect program a daemon to read the stream constantly.
 3. Send an alert e-mail when a threat is found. 
-4. Any great idea you may have.
+4. Implement error handling, timeout and a better python program.
+5. Any great idea you may have.
 
 ## References
 
