@@ -11,9 +11,8 @@ freshclam
 systemctl start clamd@scan
 systemctl enable clamd@scan
 echo "ClamAV Install Ended"
-bucket_name=bucket1
 
 echo "Scan objects"
-curl -O https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scan_bucket.py
+wget -P /root https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scan_bucket.py
 chmod 744 /root/scan_bucket.py
-/usr/bin/python3 /root/scan_bucket.py $bucket_name >> /root/report.txt
+/usr/bin/python3 /root/scan_bucket.py bucket1 quarantine >> /root/report.txt

@@ -15,7 +15,9 @@ We are going to use Clamav open source antivirus engine for detecting trojans, v
 ## Setup
 
 To setup this envirionment you need to have all the required privileges in the compartment or be part of an administrator group.
-You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN Wizard or you can just start your instance on an existing subnet. It is all up to you. 
+
+You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN Wizard or you can just start your instance on an existing subnet. It is all up to you.
+
 We are going to use a new compartment called **scan** and also a VCN using the Wizard. Besides that you'll need to setup the following resources:
 
 ### Compartment and VCN
@@ -53,14 +55,14 @@ endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 ### ssh Key par 
 7. Generate a ssh key par to use with your instance.
 
-## Usage with SCAN
+## Usage with SCAN 
 
 To scan your bucket do the following:
 1. Create a Linux instance in the compartment scan.
 2. Select the shape you need and **Oracle Developer Image**
 3. Put the instance in your VCN and Subnet. 
 4. Copy the **cloud-init** script for the instane. File: **BSAV2.sh**
-5. Don't forget to adjust the variable **bucket_name** at line 15 !!
+5. Adjust the parameters **bucket1**  and **quarantine** at line 18 !!
 
 ## Usage with PROTECT
 
@@ -69,7 +71,7 @@ To protect your bucket scanning objects created on it do the following:
 2. Select the shape you need and **Oracle Developer Image**
 3. Put the instance in your VCN and Subnet. 
 4. Copy the **cloud-init** script for the instane. File: **BSAV2.sh**
-5. Adjust the variable **bucket_name, bucket_quarantine, streamID, endpoint** !
+5. Adjust the parameters **bucket_to_scan, bucket_quarantine, streamID, endpoint** !
 
 ## Roadmap and extensions 
 
