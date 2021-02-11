@@ -21,20 +21,21 @@ You can spin up your instance on a different **Compartment** and a new **Virtual
 We are going to use a new compartment called **scan** and also a VCN using the Wizard. Besides that you'll need to setup the following resources:
 
 ### Compartment and VCN
-Create a new compartment called **scan** and annotate the compartment OCID. Create also a VCN using Wizard. 
+Create a new compartment called **scan** and annotate the compartment OCID. 
+Create a VCN called **ScanVCN** using Wizard. 
 
 ### Object Storage
 
-1. Select a bucket with objects to scan and enable **Emit Object Events** for this bucket. Name: **bucket1**
+1. Select a bucket with objects to scan and enable **Emit Object Events** for this bucket. Name: **checkinobj**
 2. Create a standard bucket to move infected object to it. Name: **quarantine**
 
 ### Security 
 
-3. Create a Dynamic Group with a rule that will qualify your instance. Name: **dyngroupscan**
+3. Create a Dynamic Group with a rule that will qualify your instance. Name: **ScanDynGroup**
 ``` 
 All {instance.compartment.id = 'ocid1.compartment.oc1..aaaaaaaa......algq'} 
  ```
-4. Create a policy to allow your Dynamic Group to manage objects. Name: **policiescan**
+4. Create a policy to allow your Dynamic Group to manage objects. Name: **ScanPolicy**
 ```oci
 Allow dynamic-group dyngroupscan to manage buckets in compartment scan
 Allow dynamic-group dyngroupscan to manage objects in compartment scan
@@ -43,14 +44,14 @@ Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment
 ```
 ### Stream
 
-5. Create a stream to receive event from object creation. Name **Stream1**
+5. Create a stream to receive event from object creation. Name **ScanStream**
 for this component you need to annotate the streamID and endpoint 
 ```
 streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaa......moxla"
 endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 ```
 ### Event
-6. Create an event to track object create on bucket1 and write to Stream1. Name: **Event1**
+6. Create an event to track object create on bucket checkinobj and write to ScanStream. Name: **ScanRule**
 
 ### ssh Key par 
 7. Generate a ssh key par to use with your instance.
@@ -59,10 +60,10 @@ endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 
 To scan your bucket do the following:
 1. Create a Linux instance in the compartment scan.
-2. Select the shape you need and **Oracle Developer Image**
+2. Select the shape you need and **Oracle Developer Image** as image
 3. Put the instance in your VCN and Subnet. 
 4. Copy the **cloud-init** script for the instance. File: **BSAV2.sh**
-5. Adjust the parameters **bucket1**  and **quarantine** at line 18 !!
+5. Adjust the parameters **checkinobj**  and **quarantine** at line 18 !!
 
 ## Usage with PROTECT
 
