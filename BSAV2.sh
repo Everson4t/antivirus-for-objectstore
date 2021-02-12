@@ -15,4 +15,4 @@ echo "ClamAV Install Ended"
 echo "Scan objects"
 wget -P /root https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scan_bucket.py
 chmod 744 /root/scan_bucket.py
-/usr/bin/python3 /root/scan_bucket.py bucket1 quarantine >> /root/report.txt
+/usr/bin/python3 /root/scan_bucket.py checkinobj quarantine >> /root/report.txt

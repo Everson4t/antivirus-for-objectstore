@@ -1,7 +1,7 @@
 import oci, time, pyclamd
 from base64 import b64decode
 
-bucket_scan = "bucket1"
+bucket_scan = "checkinobj"
 bucket_quarantine = "quarentine"
 streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaaaaay4fmgaax5ttloxb52w7nfkqqgueytfjreoagds3dtgyn5bye74a"
 endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
