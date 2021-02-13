@@ -52,3 +52,4 @@ if len(r.data):
                resp_del = client.delete_object(namespace, bucket_scan, object_name)
                resp_wr = client.get_work_request(resp_cp.headers.get('opc-work-request-id'))
                print("resp_del data: {0} - resp_del status {1} ".format(resp_del.data, resp_wr.data.status))   
+               
