@@ -1,4 +1,4 @@
-import sys, time, oci, pyclamd
+import oci, sys, time, pyclamd
 bucket_name = sys.argv[1]
 bucket_quarantine = sys.argv[2]
 signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
@@ -28,14 +28,13 @@ for obj in response.data.objects:
       cp_complete = False
       while not cp_complete:
          resp_wr = client.get_work_request(resp_cp.headers.get('opc-work-request-id'))
-         print("resp_cp data: {0} - resp_cp status {1} - obj_name {2} - request  '{3}'".format(resp_cp.data, resp_cp.status, obj.name, resp_wr.data.status))
+         print("Copying infected object to quarantine... Status {0} - obj_name {1} - request  '{2}'".format(resp_cp.status, obj.name, resp_wr.data.status))
          if resp_wr.data.status == 'COMPLETED': 
             cp_complete = True
          else:    
             time.sleep(3)
-      print("resp_cp data: {0} - resp_cp status {1} - obj_name {2} - request  {3}".format(resp_cp.data, resp_cp.status, obj.name, resp_wr.data))
+      print("Copying infected object to quarantine... Status {0} - obj_name {1} - request  '{2}'".format(resp_cp.status, obj.name, resp_wr.data.status))
       if cp_complete:
          resp_del = client.delete_object(namespace, bucket_name, obj.name)
          resp_wr = client.get_work_request(resp_cp.headers.get('opc-work-request-id'))
-         print("resp_del data: {0} - resp_del status {1} ".format(resp_del.data, resp_wr.data.status))   
-       
+         print("Deleting virus... status {0} ".format(resp_wr.data.status))

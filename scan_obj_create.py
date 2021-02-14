@@ -1,18 +1,18 @@
-import oci, time, pyclamd
+import oci, sys, time, pyclamd
 from base64 import b64decode
-
-bucket_scan = "checkinobj"
-bucket_quarantine = "quarentine"
-streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaaaaay4fmgaax5ttloxb52w7nfkqqgueytfjreoagds3dtgyn5bye74a"
-endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
-
+#
+bucket_scan = sys.argv[1]
+bucket_quarantine = sys.argv[2]
+streamingID = sys.argv[3]
+endpoint = sys.argv[4]
+#
 signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
 region = signer.region
 streaming = oci.streaming.StreamClient(config={}, service_endpoint=endpoint, signer=signer)
 client = oci.object_storage.ObjectStorageClient(config={}, signer=signer)
 namespace = client.get_namespace().data
 cdsocket = pyclamd.ClamdUnixSocket()
-
+#
 cursor_detail = oci.streaming.models.CreateCursorDetails()
 cursor_detail.partition = "0"
 cursor_detail.type = "AFTER_OFFSET"
@@ -52,4 +52,3 @@ if len(r.data):
                resp_del = client.delete_object(namespace, bucket_scan, object_name)
                resp_wr = client.get_work_request(resp_cp.headers.get('opc-work-request-id'))
                print("resp_del data: {0} - resp_del status {1} ".format(resp_del.data, resp_wr.data.status))   
-               
