@@ -17,8 +17,6 @@ resource "oci_events_rule" "ScanEventRule" {
   }
 }
 
-#  Stream
-
 resource "oci_streaming_stream" "ScanStream" {
     #Required
     name       = "ScanStream"
