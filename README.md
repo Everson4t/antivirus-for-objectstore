@@ -12,7 +12,7 @@ We are going to use Clamav open source antivirus engine for detecting trojans, v
 
 ![AVobj1.JPG](https://github.com/Everson4t/antivirus-for-objectstore/blob/main/images/AVobj1.JPG)
 
-## Setup
+## Manual Setup
 
 To setup this environment you need to have all the required privileges in the compartment or be part of an administrator group.
 
@@ -56,14 +56,37 @@ endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 ### ssh Key par 
 7. Generate a ssh key par to use with your instance.
 
+## Setup Using the Terraform CLI
+
+### Clone the Module
+
+Now, you'll want a local copy of this repo. You can make that with the commands:
+```
+git clone https://github.com/Everson4t/antivirus-for-objectstore
+cd antivirus-for-objectstore
+ls
+```
+
 ## Usage with SCAN 
 
-To scan your bucket do the following:
-1. Create a Linux instance in the compartment scan.
-2. Select the shape you need and **Oracle Developer Image** as image
-3. Put the instance in your VCN and Subnet. 
-4. Copy the **cloud-init** script for the instance. File: **BSAV2.sh**
-5. Adjust the parameters **checkinobj**  and **quarantine** at line 18 !!
+### To scan your bucket do the following:
+1. create a fake virus file to test the environment.
+```
+python3
+import pyclamd
+cdsocket = pyclamd.ClamdUnixSocket()
+void = open('/root/EICAR_TEST','wb').write(cdsocket.EICAR())
+```
+2. upload the file you just created to checkinobj bucket.
+```
+oci os ns get --auth instance_principal
+oci os object put -ns <namespace> -bn checkinobj --name infected_01.txt --file /root/EICAR_TEST --auth instance_principal
+```
+3. get and run the scan_bucket.py
+```
+wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_bucket.py
+python3 scan_bucket.py checkinobj quarantine
+```
 
 ## Usage with PROTECT
 

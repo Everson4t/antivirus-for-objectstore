@@ -3,6 +3,8 @@ variable "private_key_path" {}
 variable "fingerprint" {}
 variable "user_ocid"{}
 variable "ssh_public_key"{}
+variable compartment_ocid {}
+variable region {}
 
 variable "ScanVCN_CIDR" {
   default = "172.16.0.0/16"
