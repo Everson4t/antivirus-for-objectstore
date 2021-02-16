@@ -66,23 +66,41 @@ git clone https://github.com/Everson4t/antivirus-for-objectstore
 cd antivirus-for-objectstore
 ls
 ```
+### Prerequisites
+First off, you'll need to do some pre-deploy setup.  That's all detailed [here](https://github.com/cloud-partners/oci-prerequisites).
+
+Secondly, create a `terraform.tfvars` file and populate with the following information:
+
+```
+# Authentication
+tenancy_ocid         = "<tenancy_ocid>"
+user_ocid            = "<user_ocid>"
+fingerprint          = "<finger_print>"
+private_key_path     = "<pem_private_key_path>"
+
+# Region
+region = "<oci_region>"
+
+# Compartment
+compartment_ocid = "<compartment_ocid>"
+```
 
 ## Usage with SCAN 
 
 ### To scan your bucket do the following:
-1. create a fake virus file to test the environment.
+1. Create a fake virus file to test the environment.
 ```
 python3
 import pyclamd
 cdsocket = pyclamd.ClamdUnixSocket()
 void = open('/root/EICAR_TEST','wb').write(cdsocket.EICAR())
 ```
-2. upload the file you just created to checkinobj bucket.
+2. Upload the file you just created to checkinobj bucket.
 ```
 oci os ns get --auth instance_principal
 oci os object put -ns <namespace> -bn checkinobj --name infected_01.txt --file /root/EICAR_TEST --auth instance_principal
 ```
-3. get and run the scan_bucket.py
+3. Get and run the scan_bucket.py
 ```
 wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_bucket.py
 python3 scan_bucket.py checkinobj quarantine
@@ -90,12 +108,17 @@ python3 scan_bucket.py checkinobj quarantine
 
 ## Usage with PROTECT
 
-To protect your bucket scanning objects created on it do the following:
-1. Create a Linux instance in the compartment scan.
-2. Select the shape you need and **Oracle Developer Image**
-3. Put the instance in your VCN and Subnet. 
-4. Copy the **cloud-init** script for the instance. File: **BSAV2.sh**
-5. Adjust the parameters **bucket_to_scan, bucket_quarantine, streamID, endpoint** !
+### To protect your bucket scanning objects created on it do the following:
+1. Get and run the scan_obj_create.py
+```
+wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_obj_create.py
+python3 scan_obj_create.py checkinobj quarantine ocid1.stream.oc1.sa-saopaulo-1.amaaaaaat56iz2iayfhzbhmp7e5gpcca457inunw6maqubivptn6nywtxybq https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com
+```
+2. Upload the file to checkinobj bucket
+```
+oci os ns get --auth instance_principal
+oci os object put -ns <namespace> -bn checkinobj --name infected_02.txt --file /root/EICAR_TEST --auth instance_principal
+```
 
 ## Roadmap and extensions 
 
