@@ -15,8 +15,7 @@ cdsocket = pyclamd.ClamdUnixSocket()
 #
 cursor_detail = oci.streaming.models.CreateCursorDetails()
 cursor_detail.partition = "0"
-cursor_detail.type = "AFTER_OFFSET"
-cursor_detail.offset = 11
+cursor_detail.type = "TRIM_HORIZON"
 cursor = streaming.create_cursor(streamingID, cursor_detail)
 r = streaming.get_messages(streamingID, cursor.data.value)
 
@@ -42,13 +41,13 @@ if len(r.data):
             cp_complete = False
             while not cp_complete:
                resp_wr = client.get_work_request(resp_cp.headers.get('opc-work-request-id'))
-               print("resp_cp data: {0} - resp_cp status {1} - obj_name {2} - request  '{3}'".format(resp_cp.data, resp_cp.status, object_name, resp_wr.data.status))
+               print("Copying infected object to quarantine... Status {0} - obj_name {1} - request  '{2}'".format(resp_cp.status, object_name, resp_wr.data.status))
                if resp_wr.data.status == 'COMPLETED': 
                   cp_complete = True
                else:    
                   time.sleep(3)
-            print("resp_cp data: {0} - resp_cp status {1} - obj_name {2} - request  {3}".format(resp_cp.data, resp_cp.status, object_name, resp_wr.data))
+            print("Copying infected object to quarantine... Status {0} - obj_name {1} - request  '{2}'".format(resp_cp.status, object_name, resp_wr.data.status))
             if cp_complete:
                resp_del = client.delete_object(namespace, bucket_scan, object_name)
                resp_wr = client.get_work_request(resp_cp.headers.get('opc-work-request-id'))
-               print("resp_del data: {0} - resp_del status {1} ".format(resp_del.data, resp_wr.data.status))   
+               print("Deleting virus... status {0} ".format(resp_wr.data.status))

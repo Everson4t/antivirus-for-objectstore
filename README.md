@@ -51,7 +51,7 @@ streamingID = "ocid1.stream.oc1.sa-saopaulo-1.amaaaa......moxla"
 endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 ```
 ### Event
-6. Create an event to track object create on bucket checkinobj and write to ScanStream. Name: **ScanRule**
+6. Create an event to track object create on bucket checkinobj and write to ScanStream. Name: **ScanEventRule**
 
 ### ssh Key par 
 7. Generate a ssh key par to use with your instance.
