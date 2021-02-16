@@ -16,7 +16,7 @@ resource "oci_core_instance" "ScanInstance" {
   }
 
   metadata = {
-     ssh_authorized_keys = var.ssh_public_key
-	 user_data = base64encode(file("./cloud-init/cloud-init.sh"))
+     ssh_authorized_keys = tls_private_key.public_private_key_pair.public_key_openssh
+	   user_data = base64encode(file("./cloud-init/cloud-init.sh"))
   }
 }

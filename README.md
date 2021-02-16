@@ -12,16 +12,16 @@ We are going to use Clamav open source antivirus engine for detecting trojans, v
 
 ![AVobj1.JPG](https://github.com/Everson4t/antivirus-for-objectstore/blob/main/images/AVobj1.JPG)
 
-## Manual Setup
+## Deploy using OCI Console
 
 To setup this environment you need to have all the required privileges in the compartment or be part of an administrator group.
 
 You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN Wizard or you can just start your instance on an existing subnet. It is all up to you.
 
-We are going to use a new compartment called **scan** and also a VCN using the Wizard. Besides that you'll need to setup the following resources:
+We are going to use a new compartment called **Scan** and also a VCN using the Wizard. Besides that you'll need to setup the following resources:
 
 ### Compartment and VCN
-Create a new compartment called **scan** and annotate the compartment OCID. 
+Create a new compartment called **Scan** and annotate the compartment OCID. 
 Create a VCN called **ScanVCN** using Wizard. 
 
 ### Object Storage
@@ -37,10 +37,10 @@ All {instance.compartment.id = 'ocid1.compartment.oc1..aaaaaaaa......algq'}
  ```
 4. Create a policy to allow your Dynamic Group to manage objects. Name: **ScanPolicy**
 ```oci
-Allow dynamic-group dyngroupscan to manage buckets in compartment scan
-Allow dynamic-group dyngroupscan to manage objects in compartment scan
-Allow dynamic-group dyngroupscan to manage stream-family in compartment scan
-Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment scan
+Allow dynamic-group dyngroupscan to manage buckets in compartment Scan
+Allow dynamic-group dyngroupscan to manage objects in compartment Scan
+Allow dynamic-group dyngroupscan to manage stream-family in compartment Scan
+Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment Scan
 ```
 ### Stream
 
@@ -56,7 +56,7 @@ endpoint = "https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com"
 ### ssh Key par 
 7. Generate a ssh key par to use with your instance.
 
-## Setup Using the Terraform CLI
+## Deploy Using the Terraform CLI
 
 ### Clone the Module
 
@@ -73,37 +73,45 @@ Secondly, create a `terraform.tfvars` file and populate with the following infor
 
 ```
 # Authentication
-tenancy_ocid         = "<tenancy_ocid>"
-user_ocid            = "<user_ocid>"
-fingerprint          = "<finger_print>"
-private_key_path     = "<pem_private_key_path>"
+tenancy_ocid       = "<tenancy_ocid>"
+user_ocid          = "<user_ocid>"
+fingerprint        = "<finger_print>"
+private_key_path   = "<pem_private_key_path>"
 
 # Region
-region = "<oci_region>"
+region             = "<oci_region>"
 
 # Compartment
-compartment_ocid = "<compartment_ocid>"
+compartment_ocid   = "<compartment_ocid>"
 ```
+### Create the Resources
+Run the following commands:
+
+    terraform init
+    terraform plan
+    terraform apply
+
+### Destroy the Deployment
+When you no longer need the deployment, you can run this command to destroy the resources:
+
+    terraform destroy
 
 ## Usage with SCAN 
 
 ### To scan your bucket do the following:
-1. Create a fake virus file to test the environment.
+1. Copy the string to a fake virus file called EICAR_TEST to test the environment.
 ```
-python3
-import pyclamd
-cdsocket = pyclamd.ClamdUnixSocket()
-void = open('/root/EICAR_TEST','wb').write(cdsocket.EICAR())
+X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
 ```
 2. Upload the file you just created to checkinobj bucket.
 ```
 oci os ns get --auth instance_principal
-oci os object put -ns <namespace> -bn checkinobj --name infected_01.txt --file /root/EICAR_TEST --auth instance_principal
+oci os object put -ns <namespace> -bn checkinobj --name infected_01.txt --file EICAR_TEST --auth instance_principal
 ```
 3. Get and run the scan_bucket.py
 ```
 wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_bucket.py
-python3 scan_bucket.py checkinobj quarantine
+sudo python3 scan_bucket.py checkinobj quarantine
 ```
 
 ## Usage with PROTECT
@@ -112,12 +120,12 @@ python3 scan_bucket.py checkinobj quarantine
 1. Get and run the scan_obj_create.py
 ```
 wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_obj_create.py
-python3 scan_obj_create.py checkinobj quarantine ocid1.stream.oc1.sa-saopaulo-1.amaaaaaat56iz2iayfhzbhmp7e5gpcca457inunw6maqubivptn6nywtxybq https://cell-1.streaming.sa-saopaulo-1.oci.oraclecloud.com
+sudo python3 scan_obj_create.py checkinobj quarantine <stream_ocid> <stream_endpoint> 
 ```
 2. Upload the file to checkinobj bucket
 ```
 oci os ns get --auth instance_principal
-oci os object put -ns <namespace> -bn checkinobj --name infected_02.txt --file /root/EICAR_TEST --auth instance_principal
+oci os object put -ns <namespace> -bn checkinobj --name infected_02.txt --file EICAR_TEST --auth instance_principal
 ```
 
 ## Roadmap and extensions 
