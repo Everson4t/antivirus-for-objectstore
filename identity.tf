@@ -18,9 +18,9 @@ resource oci_identity_policy ScanPolicy {
   description = "ScanPolicy"
   name = "ScanPolicy"
   statements = [
-    "Allow dynamic-group ScanDynGroup to manage buckets in compartment Scan",
-    "Allow dynamic-group ScanDynGroup to manage objects in compartment Scan",
+    "Allow dynamic-group ScanDynGroup to manage buckets in tenancy",
+    "Allow dynamic-group ScanDynGroup to manage objects in tenancy",
     "Allow dynamic-group ScanDynGroup to manage stream-family in compartment Scan",
-    "Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment Scan"
+    format("Allow service objectstorage-%s to manage object-family in compartment Scan", var.region)
   ]
 }
