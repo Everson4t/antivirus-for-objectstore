@@ -36,11 +36,11 @@ Create a VCN called **ScanVCN** using Wizard.
 All {instance.compartment.id = 'ocid1.compartment.oc1..aaaaaaaa......algq'} 
  ```
 4. Create a policy to allow your Dynamic Group to manage objects. Name: **ScanPolicy**
-```oci
-Allow dynamic-group dyngroupscan to manage buckets in compartment Scan
-Allow dynamic-group dyngroupscan to manage objects in compartment Scan
+```
+Allow dynamic-group dyngroupscan to manage buckets in tenancy
+Allow dynamic-group dyngroupscan to manage objects in tenancy
 Allow dynamic-group dyngroupscan to manage stream-family in compartment Scan
-Allow service objectstorage-sa-saopaulo-1 to manage object-family in compartment Scan
+Allow service objectstorage-sa-saopaulo-1 to manage object-family in tenancy
 ```
 ### Stream
 

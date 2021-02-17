@@ -21,6 +21,6 @@ resource oci_identity_policy ScanPolicy {
     "Allow dynamic-group ScanDynGroup to manage buckets in tenancy",
     "Allow dynamic-group ScanDynGroup to manage objects in tenancy",
     "Allow dynamic-group ScanDynGroup to manage stream-family in compartment Scan",
-    format("Allow service objectstorage-%s to manage object-family in compartment Scan", var.region)
+    format("Allow service objectstorage-%s to manage object-family in tenancy", var.region)
   ]
 }
