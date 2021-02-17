@@ -103,12 +103,12 @@ When you no longer need the deployment, you can run this command to destroy the 
 ```
 X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
 ```
-2. Upload the file you just created to checkinobj bucket.
+2. Upload the file you just created to checkinobj bucket using the correct objects namespace.
 ```
 oci os ns get --auth instance_principal
 oci os object put -ns <namespace> -bn checkinobj --name infected_01.txt --file EICAR_TEST --auth instance_principal
 ```
-3. Get and run the scan_bucket.py
+3. Get a small python script called scan_bucket.py and run it to check for virus and move infected objects.
 ```
 wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_bucket.py
 sudo python3 scan_bucket.py checkinobj quarantine
@@ -117,12 +117,13 @@ sudo python3 scan_bucket.py checkinobj quarantine
 ## Usage with PROTECT
 
 ### To protect your bucket scanning objects created on it do the following:
-1. Get and run the scan_obj_create.py
+1. Get a small python script called scan_obj_create.py to check streaming and scan new objects.
+   You need to provide source and target buckets and streaming OCID and endpoint get from OCI console or terraform output
 ```
 wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_obj_create.py
 sudo python3 scan_obj_create.py checkinobj quarantine <stream_ocid> <stream_endpoint> 
 ```
-2. Upload the file to checkinobj bucket
+1. Upload the file to checkinobj bucket
 ```
 oci os ns get --auth instance_principal
 oci os object put -ns <namespace> -bn checkinobj --name infected_02.txt --file EICAR_TEST --auth instance_principal
