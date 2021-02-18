@@ -18,24 +18,24 @@ To setup this environment you need to have all the required privileges in the co
 
 You can spin up your instance on a different **Compartment** and a new **Virtual Cloud Network** using a VCN Wizard or you can just start your instance on an existing subnet. It is all up to you.
 
-We are going to use a new compartment called **Scan** and also a VCN using the Wizard. Besides that you'll need to setup the following resources:
+We are going to use a new compartment called **Scan** and a new VCN using the Wizard. Besides that you'll need to setup the following resources:
 
 ### Compartment and VCN
 Create a new compartment called **Scan** and annotate the compartment OCID. 
-Create a VCN called **ScanVCN** using Wizard. 
+Create a VCN called **ScanVCN** using a VCN Wizard with internet connectivity. 
 
 ### Object Storage
 
-1. Select a bucket with objects to scan and enable **Emit Object Events** for this bucket. Name: **checkinobj**
+1. Select a bucket with objects to scan and enable **Emit Object Events** on it or create a new bucket. Name: **checkinobj**
 2. Create a standard bucket to move infected object to it. Name: **quarantine**
 
 ### Security 
 
-3. Create a Dynamic Group with a rule that will qualify your instance. Name: **ScanDynGroup**
+3. Create a Dynamic Group with a rule that will qualify your instance. Name: **ScanDynGroup** Get the compartment_ocid to put in the Matching Rules.
 ``` 
 All {instance.compartment.id = 'ocid1.compartment.oc1..aaaaaaaa......algq'} 
  ```
-4. Create a policy to allow your Dynamic Group to manage objects. Name: **ScanPolicy**
+1. Create a policy to allow your Dynamic Group to manage objects. Name: **ScanPolicy** We are giving access in tenancy so you can scan any bucket.
 ```
 Allow dynamic-group dyngroupscan to manage buckets in tenancy
 Allow dynamic-group dyngroupscan to manage objects in tenancy
@@ -96,38 +96,37 @@ When you no longer need the deployment, you can run this command to destroy the 
 
     terraform destroy
 
-## Usage with SCAN 
+## How to use with SCAN 
 
 ### To scan your bucket do the following:
-1. Copy the string to a fake virus file called EICAR_TEST to test the environment.
-```
-X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
-```
-2. Upload the file you just created to checkinobj bucket using the correct objects namespace.
-```
-oci os ns get --auth instance_principal
-oci os object put -ns <namespace> -bn checkinobj --name infected_01.txt --file EICAR_TEST --auth instance_principal
-```
-3. Get a small python script called scan_bucket.py and run it to check for virus and move infected objects.
+1. Get a small python script called scan_bucket.py and run it to check for virus and move infected objects to quarantine.
 ```
 wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_bucket.py
-sudo python3 scan_bucket.py checkinobj quarantine
+sudo python3 scan_bucket.py <your_bucket> quarantine
 ```
 
-## Usage with PROTECT
+## How to use with PROTECT
 
 ### To protect your bucket scanning objects created on it do the following:
 1. Get a small python script called scan_obj_create.py to check streaming and scan new objects.
-   You need to provide source and target buckets and streaming OCID and endpoint get from OCI console or terraform output
+   You need to provide source and target buckets and streaming OCID and endpoint that you can get from OCI console or terraform output
 ```
 wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_obj_create.py
 sudo python3 scan_obj_create.py checkinobj quarantine <stream_ocid> <stream_endpoint> 
 ```
-1. Upload the file to checkinobj bucket
+
+## how to test with a fake threats
+
+1. Copy this string to a file called EICAR_TEST.
+```
+X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
+```
+2. Upload the file you just created to a bucket using the correct objects namespace.
 ```
 oci os ns get --auth instance_principal
-oci os object put -ns <namespace> -bn checkinobj --name infected_02.txt --file EICAR_TEST --auth instance_principal
+oci os object put -ns <namespace> -bn checkinobj --name infected_01.txt --file EICAR_TEST --auth instance_principal
 ```
+3. Run the scripts to detect and move the infected objects.
 
 ## Roadmap and extensions 
 
