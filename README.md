@@ -115,7 +115,7 @@ wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/
 sudo python3 scan_obj_create.py checkinobj quarantine <stream_ocid> <stream_endpoint> 
 ```
 
-## how to test with a fake threats
+## how to test with a fake threat
 
 1. Copy this string to a file called EICAR_TEST.
 ```
@@ -126,15 +126,16 @@ X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
 oci os ns get --auth instance_principal
 oci os object put -ns <namespace> -bn checkinobj --name infected_01.txt --file EICAR_TEST --auth instance_principal
 ```
-3. Run the scripts to detect and move the infected objects.
+3. Run the scripts to detect and move the infected objects to quarantine.
 
 ## Roadmap and extensions 
 
 1. Implement this solution with a different or commercial antivirus.  
 2. Make the protect program a daemon to read the stream constantly.
-3. Send an alert e-mail when a threat is found. 
-4. Implement error handling, timeout and a better python program.
-5. Any great idea you may have.
+3. Test for a bigger Unix socket size for the scan. Actually 1000MB
+4. Send an alert e-mail when a threat is found. 
+5. Implement error handling, timeout and a better python program.
+6. Any great idea you may have.
 
 ## References
 
