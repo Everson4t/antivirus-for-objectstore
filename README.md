@@ -109,6 +109,7 @@ sudo python3 scan_bucket.py <your_bucket> quarantine
 
 ### To protect your bucket scanning objects created on it do the following:
 1. Get a small python script called scan_obj_create.py to check streaming and scan new objects.
+   
    You need to provide source and target buckets and streaming OCID and endpoint that you can get from OCI console or terraform output
 ```
 wget https://raw.githubusercontent.com/Everson4t/antivirus-for-objectstore/main/scripts/scan_obj_create.py
@@ -127,6 +128,13 @@ oci os ns get --auth instance_principal
 oci os object put -ns <namespace> -bn checkinobj --name infected_01.txt --file EICAR_TEST --auth instance_principal
 ```
 3. Run the scripts to detect and move the infected objects to quarantine.
+4. You can generate a test file with the python package we intalled before doing the following as root user
+```
+python3
+>>> import pyclamd
+>>> cdsocket = pyclamd.ClamdUnixSocket()
+>>> void = open('/root/EICAR_TEST','wb').write(cdsocket.EICAR())
+```
 
 ## Roadmap and extensions 
 
