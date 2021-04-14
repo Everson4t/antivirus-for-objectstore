@@ -1,4 +1,4 @@
-data "oci_identity_availability_domains" "availability_domains" {
+data "oci_identity_availability_domains" "availability_domains" { 
   compartment_id = oci_identity_compartment.ScanCompart.id
 }
 

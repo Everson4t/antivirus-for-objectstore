@@ -1,5 +1,5 @@
 resource "oci_core_instance" "ScanInstance" {
-  display_name        = "ScanInstance"
+  display_name        = "ScanInstance" 
   compartment_id      = oci_identity_compartment.ScanCompart.id
   availability_domain = lookup(data.oci_identity_availability_domains.availability_domains.availability_domains[0],"name")
   shape               = var.instance_shape

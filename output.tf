@@ -1,4 +1,4 @@
-output "public-ip-for-compute-instance" {
+output "public-ip-for-compute-instance" { 
   value = oci_core_instance.ScanInstance.public_ip
 }
 

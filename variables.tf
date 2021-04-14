@@ -5,7 +5,7 @@ variable "user_ocid"{}
 variable "compartment_ocid" {}
 variable "region" {}
 
-variable "ScanVCN_CIDR" {
+variable "ScanVCN_CIDR" { 
   default = "172.16.0.0/16"
 }
 

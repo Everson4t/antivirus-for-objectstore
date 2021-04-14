@@ -1,4 +1,4 @@
-resource "oci_events_rule" "ScanEventRule" {
+resource "oci_events_rule" "ScanEventRule" { 
   #Required
   display_name    = "ScanEventRule"
   compartment_id  = oci_identity_compartment.ScanCompart.id

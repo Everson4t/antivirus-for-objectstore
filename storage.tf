@@ -1,4 +1,4 @@
-resource "oci_objectstorage_bucket" "checkinobj" {
+resource "oci_objectstorage_bucket" "checkinobj" { 
     #Required
     compartment_id = oci_identity_compartment.ScanCompart.id
     name           = "checkinobj"

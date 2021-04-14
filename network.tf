@@ -1,4 +1,5 @@
 resource oci_core_vcn ScanVCN {
+  depends_on = [oci_identity_compartment.ScanCompart]
   cidr_block     = var.ScanVCN_CIDR
   compartment_id = oci_identity_compartment.ScanCompart.id
   defined_tags   = {}

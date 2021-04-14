@@ -1,4 +1,4 @@
-resource oci_identity_compartment ScanCompart {
+resource oci_identity_compartment ScanCompart { 
   description = "Scan"
   name = "Scan"
   compartment_id = var.compartment_ocid
