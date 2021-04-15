@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.14"
+  required_version = ">= 0.12.0"
 }
 
 provider "oci" {
@@ -8,5 +8,4 @@ provider "oci" {
   fingerprint          = var.fingerprint
   private_key_path     = var.private_key_path
   region               = var.region
-  disable_auto_retries = "true"
 }
